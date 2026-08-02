@@ -81,7 +81,76 @@
 //
 
 // =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+// YOUR CODE BELOW 
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+const askQuestion = (query) => new Promise((resolve) => rl.question(query, resolve));
+
+const students = [];
+
+async function addStudent() {
+    const name = (await askQuestion("Student name: ")).trim();
+    const studentId = (await askQuestion("Student ID: ")).trim();
+    const count = parseInt(await askQuestion("How many scores? "), 10);
+    
+    const scores = [];
+    for (let i = 0; i < count; i++) {
+        const score = parseFloat(await askQuestion(`Enter score ${i + 1}: `));
+        scores.push(score);
+    }
+
+    students.push({ name, id: studentId, scores });
+    console.log(`Student "${name}" added successfully.`);
+}
+
+function displayAll() {
+    if (students.length === 0) {
+        console.log("No students have been added yet.");
+        return;
+    }
+
+    students.forEach((s) => {
+        const avg = s.scores.length ? s.scores.reduce((a, b) => a + b, 0) / s.scores.length : 0;
+        console.log(`${s.name.padEnd(15)} ${s.id.padEnd(10)} ${s.scores.join(', ').padEnd(15)} ${avg.toFixed(2)}`);
+    });
+}
+
+async function calcAverage() {
+    const targetId = (await askQuestion("Enter student ID: ")).trim();
+    const student = students.find((s) => s.id === targetId);
+
+    if (student) {
+        const avg = student.scores.length ? student.scores.reduce((a, b) => a + b, 0) / student.scores.length : 0;
+        console.log(`${student.name}'s average score: ${avg.toFixed(2)}`);
+    } else {
+        console.log("Error: Student ID not found.");
+    }
+}
+
+async function main() {
+    while (true) {
+        console.log("\n1. Add student\n2. Display all students\n3. Calculate average score\n4. Quit");
+        const choice = (await askQuestion("Enter choice (1-4): ")).trim();
+
+        if (choice === "1") await addStudent();
+        else if (choice === "2") displayAll();
+        else if (choice === "3") await calcAverage();
+        else if (choice === "4") {
+            rl.close();
+            break;
+        } else {
+            console.log("Invalid choice.");
+        }
+    }
+}
+
+main();
+
 // =============================================================================
 
 
