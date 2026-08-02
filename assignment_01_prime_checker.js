@@ -39,7 +39,45 @@
 
 //
 // =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+// YOUR CODE BELOW — 
+import java.util.Scanner;
+
+public class PrimeChecker {
+
+    // Method to check if a number is prime
+    public static boolean isPrime(int n) {
+        // Numbers less than 2 are NOT prime
+        if (n < 2) {
+            return false;
+        }
+
+        // Check for factors from 2 up to the square root of n
+        for (int i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // Main execution method
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a number: ");
+        int num = scanner.nextInt();
+
+        if (isPrime(num)) {
+            System.out.println(num + " is a prime number.");
+        } else {
+            System.out.println(num + " is NOT a prime number.");
+        }
+
+        scanner.close();
+    }
+}
+
 // =============================================================================
 
 
