@@ -1,4 +1,4 @@
-// =============================================================================
+my// =============================================================================
 // PROGRAMMING FUNDAMENTALS — Assignment 7
 // =============================================================================
 //
@@ -78,7 +78,65 @@
 //
 //
 // =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+// YOUR CODE BELOW — 
+const readline = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+const tasks = [];
+
+function prompt(question) {
+  return new Promise(resolve => readline.question(question, resolve));
+}
+
+async function addTask() {
+  const task = await prompt("Enter task: ");
+  tasks.push(task);
+  console.log(`Task added: "${task}"`);
+}
+
+function viewTasks() {
+  if (tasks.length === 0) {
+    console.log("No tasks in the list.");
+    return false;
+  }
+  console.log("Your Tasks:");
+  tasks.forEach((task, index) => console.log(`${index + 1}. ${task}`));
+  return true;
+}
+
+async function deleteTask() {
+  if (!viewTasks()) return;
+  const num = parseInt(await prompt("Enter task number to delete: "));
+  if (num >= 1 && num <= tasks.length) {
+    const removed = tasks.splice(num - 1, 1);
+    console.log(`Task "${removed}" has been removed.`);
+  } else {
+    console.log("Invalid task number.");
+  }
+}
+
+async function main() {
+  while (true) {
+    console.log("\n====================\n  TO-DO LIST MENU  \n====================\n1. Add task\n2. View tasks\n3. Delete task\n4. Quit");
+    const choice = await prompt("Enter your choice (1-4): ");
+
+    if (choice === "1") await addTask();
+    else if (choice === "2") viewTasks();
+    else if (choice === "3") await deleteTask();
+    else if (choice === "4") {
+      console.log("Goodbye!");
+      readline.close();
+      break;
+    } else {
+      console.log("Invalid choice.");
+    }
+  }
+}
+
+main();
+
 // =============================================================================
 
 
