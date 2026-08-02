@@ -65,7 +65,64 @@
 //
 
 // =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+// YOUR CODE BELOW — 
+function transposeMatrix(matrix) {
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+  const transposed = [];
+
+  for (let j = 0; j < cols; j++) {
+    const newRow = [];
+    for (let i = 0; i < rows; i++) {
+      newRow.push(matrix[i][j]);
+    }
+    transposed.push(newRow);
+  }
+
+  return transposed;
+}
+
+function addMatrices(matA, matB) {
+  const rows = matA.length;
+  const cols = matA[0].length;
+  const result = [];
+
+  for (let i = 0; i < rows; i++) {
+    const row = [];
+    for (let j = 0; j < cols; j++) {
+      row.push(matA[i][j] + matB[i][j]);
+    }
+    result.push(row);
+  }
+
+  return result;
+}
+
+function multiplyMatrices(matA, matB) {
+  const rowsA = matA.length;
+  const colsA = matA[0].length;
+  const colsB = matB[0].length;
+  const result = [];
+
+  for (let i = 0; i < rowsA; i++) {
+    const row = [];
+    for (let j = 0; j < colsB; j++) {
+      let sum = 0;
+      for (let k = 0; k < colsA; k++) {
+        sum += matA[i][k] * matB[k][j];
+      }
+      row.push(sum);
+    }
+    result.push(row);
+  }
+
+  return result;
+}
+
+function printMatrix(matrix) {
+  matrix.forEach(row => console.log(row.join(" ")));
+}
+
 // =============================================================================
 
 const readlineSync = require('readline-sync');
