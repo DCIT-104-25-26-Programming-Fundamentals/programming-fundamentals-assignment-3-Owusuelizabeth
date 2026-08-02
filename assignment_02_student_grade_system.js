@@ -46,7 +46,36 @@
 //
 
 // =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+// YOUR CODE BELOW — 
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.question('Enter student score (0-100): ', (input) => {
+    const score = parseInt(input, 10);
+    let grade;
+
+    if (score >= 80 && score <= 100) {
+        grade = "A";
+    } else if (score >= 70 && score <= 79) {
+        grade = "B";
+    } else if (score >= 60 && score <= 69) {
+        grade = "C";
+    } else if (score >= 50 && score <= 59) {
+        grade = "D";
+    } else if (score < 50 && score >= 0) {
+        grade = "F";
+    } else {
+        grade = "Invalid score";
+    }
+
+    console.log(`Grade: ${grade}`);
+    rl.close();
+});
+
 // =============================================================================
 
 
