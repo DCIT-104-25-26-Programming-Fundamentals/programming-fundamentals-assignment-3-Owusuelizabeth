@@ -56,7 +56,57 @@
 
 //
 // =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+// YOUR CODE BELOW — 
+const readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+const askQuestion = (query) => new Promise((resolve) => rl.question(query, resolve));
+
+async function getPositiveInteger(promptText) {
+  const val = parseInt(await askQuestion(promptText), 10);
+  if (isNaN(val)) {
+    console.log("Error: Invalid input. Please enter a valid integer.");
+    return null;
+  }
+  if (val <= 0) {
+    console.log("Error: Input must be a positive integer.");
+    return null;
+  }
+  return val;
+}
+
+function printTable(num) {
+  console.log(`\nMultiplication Table for ${num}:`);
+  for (let i = 1; i <= 12; i++) {
+    console.log(`${num}  x  ${String(i).padEnd(2, ' ')} =  ${num * i}`);
+  }
+}
+
+async function partA() {
+  const num = await getPositiveInteger("Enter a number: ");
+  if (num !== null) printTable(num);
+}
+
+async function partB() {
+  const n = await getPositiveInteger("Enter a number N: ");
+  if (n !== null) {
+    for (let i = 1; i <= n; i++) {
+      printTable(i);
+      if (i < n) console.log("-------------");
+    }
+  }
+}
+
+(async () => {
+  await partA();
+  // await partB();
+  rl.close();
+})();
+
 // =============================================================================
 
 
